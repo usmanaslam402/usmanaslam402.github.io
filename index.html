@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#131921">
 <title>Usman Aslam | Business Data Analyst</title>
 <meta name="description" content="Usman Aslam is a Business Data Analyst in Philadelphia who builds trusted data pipelines and reporting with SQL, Power BI, Python, Azure Data Factory and Databricks.">
 <meta property="og:title" content="Usman Aslam | Business Data Analyst">
@@ -10,14 +11,15 @@
 <meta property="og:type" content="website">
 <style>
   :root {
-    --bg: #fafaf7; --surface: #ffffff; --text: #1c1f24; --muted: #5b6470; --line: #e4e4de;
-    --accent: #0b5fff; --accent-soft: #e8efff; --glow: rgba(11, 95, 255, .14);
+    --navy: #131921; --navy2: #232f3e;
+    --bg: #eef1f5; --surface: #ffffff; --text: #0f1a2a; --muted: #566275; --line: #d9dfe8;
+    --accent: #146eb4; --accent-soft: #e3f0fa; --orange: #ff9900;
     --bronze: #a9714b; --silver: #8493a6; --gold: #c9962f; --bad: #d1493f;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0f1216; --surface: #171b21; --text: #eceef1; --muted: #9aa3b0; --line: #262c35;
-      --accent: #6ea0ff; --accent-soft: #1b2744; --glow: rgba(110, 160, 255, .16);
+      --bg: #0b1017; --surface: #131c28; --text: #e8edf4; --muted: #9fb0c4; --line: #223044;
+      --accent: #4aa3e8; --accent-soft: #12304a; --orange: #ffad33;
       --bronze: #c98d62; --silver: #aab7c8; --gold: #e6b655; --bad: #ff6b60;
     }
   }
@@ -28,29 +30,42 @@
   a:hover { text-decoration: underline; }
   .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 
-  #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--accent); z-index: 30; transition: width .1s linear; }
-  header.nav { position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 20; transition: box-shadow .25s ease; }
-  header.nav.scrolled { box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+  #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--orange); z-index: 30; transition: width .1s linear; }
+  header.nav { position: sticky; top: 0; background: var(--navy); border-bottom: 3px solid var(--navy2); z-index: 20; transition: box-shadow .25s ease; }
+  header.nav.scrolled { box-shadow: 0 8px 26px rgba(0,0,0,.28); }
   header.nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .brand { font-weight: 700; color: var(--text); }
-  nav a { margin-left: 18px; color: var(--muted); font-size: 15px; position: relative; transition: color .2s ease; }
-  nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
-  nav a:hover, nav a.active { color: var(--text); text-decoration: none; }
+  .brand { font-weight: 700; color: #fff; }
+  .brand:hover { text-decoration: none; color: var(--orange); }
+  nav a { margin-left: 18px; color: #c9d6e6; font-size: 15px; position: relative; transition: color .2s ease; }
+  nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+  nav a:hover, nav a.active { color: #fff; text-decoration: none; }
   nav a:hover::after, nav a.active::after { transform: scaleX(1); }
 
-  .hero { padding: 64px 0 32px; position: relative; }
-  .hero::before { content: ""; position: absolute; width: 420px; height: 420px; right: -120px; top: -60px; border-radius: 50%; background: radial-gradient(circle, var(--glow), transparent 68%); animation: drift 14s ease-in-out infinite alternate; z-index: -1; }
-  @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(-60px, 40px) scale(1.15); } }
-  .eyebrow { color: var(--accent); font-weight: 600; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
-  h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 10px 0 14px; letter-spacing: -.02em; }
-  .lede { font-size: 1.15rem; color: var(--muted); max-width: 680px; }
-  .cta { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-weight: 600; transition: transform .2s ease, box-shadow .2s ease; }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .btn:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.12); }
+  /* hero banner */
+  .hero { margin-top: 20px; padding: 40px 36px 32px; position: relative; overflow: hidden; border-radius: 18px; color: #fff;
+          background: linear-gradient(135deg, #131921 0%, #232f3e 58%, #1b4468 100%); box-shadow: 0 18px 44px rgba(19,25,33,.28); }
+  .hero::before { content: ""; position: absolute; width: 460px; height: 460px; right: -140px; top: -120px; border-radius: 50%; background: radial-gradient(circle, rgba(255,153,0,.30), transparent 66%); animation: drift 14s ease-in-out infinite alternate; }
+  .hero::after { content: ""; position: absolute; width: 380px; height: 380px; left: -140px; bottom: -200px; border-radius: 50%; background: radial-gradient(circle, rgba(74,163,232,.26), transparent 66%); }
+  @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(-50px, 40px) scale(1.15); } }
+  .hero > * { position: relative; z-index: 1; }
+  .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .eyebrow { color: var(--orange); font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+  h1 { font-size: clamp(2rem, 4.6vw, 3rem); line-height: 1.1; margin: 10px 0 14px; letter-spacing: -.02em; color: #fff; }
+  .lede { font-size: 1.1rem; color: #c9d6e6; max-width: 600px; margin: 0; }
+  .cta { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.08); color: #fff; font-weight: 600; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+  .btn.primary { background: var(--orange); border-color: var(--orange); color: #131921; }
+  .btn:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.3); background: rgba(255,255,255,.16); }
+  .btn.primary:hover { background: #ffad33; }
+
+  .portrait { position: relative; width: 210px; height: 210px; }
+  .portrait::before { content: ""; position: absolute; inset: -14px; border-radius: 50%; border: 2px dashed rgba(255,153,0,.55); animation: spin 40s linear infinite; }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid var(--orange); box-shadow: 0 0 0 8px rgba(255,153,0,.16), 0 18px 40px rgba(0,0,0,.45); background: #232f3e; animation: float 6s ease-in-out infinite alternate; display: block; }
+  @keyframes float { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* interactive pipeline */
-  .pipe { margin-top: 34px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .pipe { margin-top: 30px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
   .pipe canvas { display: block; width: 100%; height: 300px; cursor: crosshair; touch-action: pan-y; }
   .pipe-foot { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; padding: 12px 16px; border-top: 1px solid var(--line); }
   .chip b { font-size: 1.05rem; font-variant-numeric: tabular-nums; margin-right: 6px; }
@@ -58,48 +73,54 @@
   .chip.q b { color: var(--bad); } .chip.g b { color: var(--gold); }
   .hint { margin: 0 0 0 auto; color: var(--muted); font-size: 12.5px; }
 
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 28px 0 8px; }
-  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-  .stat:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,.1); border-color: var(--accent); }
-  .stat b { display: block; font-size: 1.8rem; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 0; }
+  .stat { background: var(--surface); color: var(--text); border: 1px solid var(--line); border-top: 3px solid var(--orange); border-radius: 12px; padding: 14px 16px; transition: transform .25s ease, box-shadow .25s ease; }
+  .stat:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+  .stat b { display: block; font-size: 1.8rem; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--accent); }
   .stat span.label { color: var(--muted); font-size: 14px; }
+
   section { padding: 44px 0 8px; }
-  h2 { font-size: 1.5rem; letter-spacing: -.01em; margin: 0 0 18px; }
+  h2 { font-size: 1.5rem; letter-spacing: -.01em; margin: 0 0 18px; padding-left: 12px; border-left: 4px solid var(--orange); }
   .job { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-  .job:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.08); border-color: var(--accent); }
+  .job:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(19,25,33,.14); border-color: var(--accent); }
   .job-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .job h3 { margin: 0; font-size: 1.05rem; }
+  .job h3 { margin: 0; font-size: 1.05rem; color: var(--text); }
   .meta { color: var(--muted); font-size: 14px; }
   .job ul { margin: 10px 0 0; padding-left: 20px; }
   .job li { margin-bottom: 4px; }
+  .job li::marker { color: var(--orange); }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-  .card:hover { transform: translateY(-5px); box-shadow: 0 14px 32px rgba(0,0,0,.12); border-color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; transition: transform .25s ease, box-shadow .25s ease, border-top-color .25s ease; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 14px 32px rgba(19,25,33,.16); border-top-color: var(--orange); }
   .card h3 { margin: 0 0 6px; font-size: 1.05rem; }
   .card p { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
-  .card a.more { display: inline-block; transition: transform .2s ease; }
+  .card a.more { display: inline-block; font-weight: 600; transition: transform .2s ease; }
   .card:hover a.more { transform: translateX(4px); }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-bottom: 12px; }
   .tag { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 2px 10px; font-size: 12.5px; font-weight: 600; }
   .tag.status { background: transparent; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
   .research-note { color: var(--muted); margin: -8px 0 16px; }
-  .skills dl { display: grid; grid-template-columns: 170px 1fr; gap: 8px 16px; margin: 0; }
-  .skills dt { font-weight: 600; }
+  .skills dl { display: grid; grid-template-columns: 170px 1fr; gap: 8px 16px; margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .skills dt { font-weight: 700; color: var(--accent); }
   .skills dd { margin: 0; color: var(--muted); }
-  footer { margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer { margin-top: 56px; padding: 28px 0 40px; background: var(--navy); border-top: 3px solid var(--orange); color: #9fb0c4; font-size: 14px; }
 
   .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
   .js .reveal.in { opacity: 1; transform: none; }
 
+  @media (max-width: 720px) {
+    .hero { padding: 28px 18px 22px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .portrait { order: -1; width: 150px; height: 150px; margin: 6px auto 4px; }
+  }
   @media (max-width: 600px) {
     nav a { margin-left: 10px; font-size: 14px; }
     .skills dl { grid-template-columns: 1fr; } .skills dt { margin-top: 6px; }
-    .hero::before { width: 260px; height: 260px; right: -90px; }
     .pipe canvas { height: 250px; } .hint { margin-left: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .hero::before { animation: none; }
+    .hero::before, .portrait::before, .portrait img { animation: none; }
     .js .reveal { opacity: 1; transform: none; transition: none; }
     * { transition-duration: .01ms !important; }
   }
@@ -126,14 +147,21 @@
 <main id="top" class="wrap">
 
   <div class="hero">
-    <div class="eyebrow reveal">Business Data Analyst · Philadelphia, PA</div>
-    <h1 class="reveal" style="--d:.08s">I turn raw data into reporting people can trust.</h1>
-    <p class="lede reveal" style="--d:.16s">I combine SQL, Power BI and Python with hands-on Azure and Databricks pipeline work, so the numbers in a dashboard are right before anyone reads them. M.S. in Data Science, University of West Florida.</p>
-    <div class="cta reveal" style="--d:.24s">
-      <a class="btn primary" href="mailto:usmanaslam402@gmail.com">Email me</a>
-      <a class="btn" href="https://www.linkedin.com/in/usman-aslam402" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/usmanaslam402" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="https://scholar.google.com/citations?user=CcJ0XBUAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow reveal">Business Data Analyst · Philadelphia, PA</div>
+        <h1 class="reveal" style="--d:.08s">I turn raw data into reporting people can trust.</h1>
+        <p class="lede reveal" style="--d:.16s">I combine SQL, Power BI and Python with hands-on Azure and Databricks pipeline work, so the numbers in a dashboard are right before anyone reads them. M.S. in Data Science, University of West Florida.</p>
+        <div class="cta reveal" style="--d:.24s">
+          <a class="btn primary" href="mailto:usmanaslam402@gmail.com">Email me</a>
+          <a class="btn" href="https://www.linkedin.com/in/usman-aslam402" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/usmanaslam402" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://scholar.google.com/citations?user=CcJ0XBUAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        </div>
+      </div>
+      <div class="portrait reveal" style="--d:.2s">
+        <img src="https://github.com/usmanaslam402.png?size=400" alt="Portrait of Usman Aslam" width="400" height="400" decoding="async">
+      </div>
     </div>
 
     <div class="pipe reveal" style="--d:.30s">
