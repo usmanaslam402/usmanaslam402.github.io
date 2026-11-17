@@ -12,11 +12,13 @@
   :root {
     --bg: #fafaf7; --surface: #ffffff; --text: #1c1f24; --muted: #5b6470; --line: #e4e4de;
     --accent: #0b5fff; --accent-soft: #e8efff; --glow: rgba(11, 95, 255, .14);
+    --bronze: #a9714b; --silver: #8493a6; --gold: #c9962f; --bad: #d1493f;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #0f1216; --surface: #171b21; --text: #eceef1; --muted: #9aa3b0; --line: #262c35;
       --accent: #6ea0ff; --accent-soft: #1b2744; --glow: rgba(110, 160, 255, .16);
+      --bronze: #c98d62; --silver: #aab7c8; --gold: #e6b655; --bad: #ff6b60;
     }
   }
   * { box-sizing: border-box; }
@@ -26,9 +28,7 @@
   a:hover { text-decoration: underline; }
   .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 
-  /* progress bar */
   #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--accent); z-index: 30; transition: width .1s linear; }
-
   header.nav { position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 20; transition: box-shadow .25s ease; }
   header.nav.scrolled { box-shadow: 0 6px 24px rgba(0,0,0,.08); }
   header.nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
@@ -38,7 +38,7 @@
   nav a:hover, nav a.active { color: var(--text); text-decoration: none; }
   nav a:hover::after, nav a.active::after { transform: scaleX(1); }
 
-  .hero { padding: 72px 0 40px; position: relative; }
+  .hero { padding: 64px 0 32px; position: relative; }
   .hero::before { content: ""; position: absolute; width: 420px; height: 420px; right: -120px; top: -60px; border-radius: 50%; background: radial-gradient(circle, var(--glow), transparent 68%); animation: drift 14s ease-in-out infinite alternate; z-index: -1; }
   @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(-60px, 40px) scale(1.15); } }
   .eyebrow { color: var(--accent); font-weight: 600; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
@@ -48,7 +48,17 @@
   .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-weight: 600; transition: transform .2s ease, box-shadow .2s ease; }
   .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
   .btn:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.12); }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 36px 0 8px; }
+
+  /* interactive pipeline */
+  .pipe { margin-top: 34px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .pipe canvas { display: block; width: 100%; height: 300px; cursor: crosshair; touch-action: pan-y; }
+  .pipe-foot { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; padding: 12px 16px; border-top: 1px solid var(--line); }
+  .chip b { font-size: 1.05rem; font-variant-numeric: tabular-nums; margin-right: 6px; }
+  .chip span { color: var(--muted); font-size: 13px; }
+  .chip.q b { color: var(--bad); } .chip.g b { color: var(--gold); }
+  .hint { margin: 0 0 0 auto; color: var(--muted); font-size: 12.5px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 28px 0 8px; }
   .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
   .stat:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,.1); border-color: var(--accent); }
   .stat b { display: block; font-size: 1.8rem; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
@@ -71,17 +81,22 @@
   .card:hover a.more { transform: translateX(4px); }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-bottom: 12px; }
   .tag { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 2px 10px; font-size: 12.5px; font-weight: 600; }
+  .tag.status { background: transparent; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
+  .research-note { color: var(--muted); margin: -8px 0 16px; }
   .skills dl { display: grid; grid-template-columns: 170px 1fr; gap: 8px 16px; margin: 0; }
   .skills dt { font-weight: 600; }
   .skills dd { margin: 0; color: var(--muted); }
   footer { margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 
-  /* entrance + scroll reveal (only when JS is running, so content is never hidden without it) */
   .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
   .js .reveal.in { opacity: 1; transform: none; }
-  .js .hero .reveal { transition-duration: .9s; }
 
-  @media (max-width: 600px) { nav a { margin-left: 12px; } .skills dl { grid-template-columns: 1fr; } .skills dt { margin-top: 6px; } .hero::before { width: 260px; height: 260px; right: -90px; } }
+  @media (max-width: 600px) {
+    nav a { margin-left: 10px; font-size: 14px; }
+    .skills dl { grid-template-columns: 1fr; } .skills dt { margin-top: 6px; }
+    .hero::before { width: 260px; height: 260px; right: -90px; }
+    .pipe canvas { height: 250px; } .hint { margin-left: 0; }
+  }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero::before { animation: none; }
@@ -101,6 +116,7 @@
     <nav>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -117,12 +133,24 @@
       <a class="btn primary" href="mailto:usmanaslam402@gmail.com">Email me</a>
       <a class="btn" href="https://www.linkedin.com/in/usman-aslam402" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/usmanaslam402" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=CcJ0XBUAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
     </div>
+
+    <div class="pipe reveal" style="--d:.30s">
+      <canvas id="pipe" role="img" aria-label="Animated illustration of data bricks flowing through a bronze, silver and gold pipeline. Records that fail a quality check fall into quarantine."></canvas>
+      <div class="pipe-foot">
+        <div class="chip"><b id="c-in">0</b><span>records ingested</span></div>
+        <div class="chip q"><b id="c-q">0</b><span>quarantined by quality checks</span></div>
+        <div class="chip g"><b id="c-g">0</b><span>delivered as gold</span></div>
+        <p class="hint">Illustration of a medallion pipeline. Move through the flow to disturb it, click or tap to inject raw records.</p>
+      </div>
+    </div>
+
     <div class="stats">
-      <div class="stat reveal" style="--d:.30s"><b><span data-count="40">40</span>%</b><span class="label">faster pipeline build time</span></div>
-      <div class="stat reveal" style="--d:.38s"><b><span data-count="55">55</span>%</b><span class="label">fewer recurring Databricks job failures</span></div>
-      <div class="stat reveal" style="--d:.46s"><b><span data-count="82">82</span>% → <span data-count="99">99</span>%</b><span class="label">on-time data landing</span></div>
-      <div class="stat reveal" style="--d:.54s"><b><span data-count="90">90</span>%+</b><span class="label">upstream defects caught before use</span></div>
+      <div class="stat reveal" style="--d:.1s"><b><span data-count="40">40</span>%</b><span class="label">faster pipeline build time</span></div>
+      <div class="stat reveal" style="--d:.18s"><b><span data-count="55">55</span>%</b><span class="label">fewer recurring Databricks job failures</span></div>
+      <div class="stat reveal" style="--d:.26s"><b><span data-count="82">82</span>% → <span data-count="99">99</span>%</b><span class="label">on-time data landing</span></div>
+      <div class="stat reveal" style="--d:.34s"><b><span data-count="90">90</span>%+</b><span class="label">upstream defects caught before use</span></div>
     </div>
   </div>
 
@@ -139,15 +167,17 @@
         <li>Raised on-time ADLS Gen2 data landing from 82% to 99% by fixing file-arrival, permission and ACL issues.</li>
         <li>Built a reusable DQX data-quality rules library that intercepts 90%+ of upstream defects.</li>
         <li>Implemented GitLab CI/CD with Databricks Asset Bundles to promote notebooks and jobs from dev to prod.</li>
+        <li>Automated a data validation and monitoring framework (Python, Azure Data Factory, Power BI) that flags anomalies in near real time, improving data integrity, governance compliance and audit readiness by 35%.</li>
+        <li>Built interactive Power BI dashboards and KPI tracking on financial performance, credit risk exposure and customer retention across business units.</li>
       </ul>
     </div>
 
     <div class="job reveal">
-      <div class="job-head"><h3>Data Engineer · MIND Lab</h3><span class="meta">Sep 2023 – Dec 2024 · Pensacola, FL</span></div>
+      <div class="job-head"><h3>Data Engineer · MIND Lab, University of West Florida</h3><span class="meta">Sep 2023 – Dec 2024 · Pensacola, FL</span></div>
       <ul>
-        <li>Built and maintained SQL and Excel data pipelines for high-volume experimental datasets supporting "Emerging Technology Trends" research.</li>
+        <li>Built and maintained SQL, Excel and Python data pipelines for high-volume experimental datasets supporting "Emerging Technology Trends" research, covering acquisition, cleaning and analysis.</li>
         <li>Consolidated data from IEEE, Wiley, MIT, Questia, Springer, Elsevier, Web of Science and Google Trends for trend forecasting and bibliometric analysis.</li>
-        <li>Applied statistical modeling and Power BI to surface patterns across multi-source data.</li>
+        <li>Applied statistical modeling and Power BI to surface patterns across multi-source data and support technology innovation.</li>
       </ul>
     </div>
 
@@ -155,7 +185,8 @@
       <div class="job-head"><h3>Assistant Project Manager · ABN Overseas Education</h3><span class="meta">Sep 2019 – Oct 2022 · Lahore, Pakistan</span></div>
       <ul>
         <li>Built and maintained automated Power BI dashboards tracking 300+ active client applications, cutting manual reporting effort by 40%.</li>
-        <li>Optimized SQL-based ERP data pipelines to centralize operational metrics and ensure data accuracy and compliance.</li>
+        <li>Optimized SQL-based ERP data pipelines, centralizing metrics across admissions, compliance and finance, including data migration, schema optimization and quality checks.</li>
+        <li>Worked with cross-functional teams on data governance, monthly KPI presentations and trend analyses for leadership.</li>
       </ul>
     </div>
   </section>
@@ -165,29 +196,29 @@
     <div class="grid">
 
       <div class="card reveal">
-        <h3>Emerging Technology Trends (Capstone)</h3>
-        <p>Bibliometric analysis of large research databases to forecast technology trends, combining SQL, Excel, statistical modeling and Power BI.</p>
-        <div class="tags"><span class="tag">SQL</span><span class="tag">Power BI</span><span class="tag">Statistics</span></div>
-        <a class="more" href="https://github.com/usmanaslam402/Analysis-of-Emerging-Technology-trends" target="_blank" rel="noopener">View on GitHub →</a>
+        <h3>Analysis of Emerging Technology Trends, 2014–2018</h3>
+        <p>Weighted bibliometric and social-interest evaluation of Horizon Report, IEEE and MIT technology predictions, using Google Trends and publications from IEEE, MIT, Springer, Web of Science and others.</p>
+        <div class="tags"><span class="tag">Bibliometrics</span><span class="tag">SQL</span><span class="tag">Power BI</span></div>
+        <a class="more" href="https://usmanaslam402.github.io/Analysis-of-Emerging-Technology-trends/" target="_blank" rel="noopener">Open project →</a>
       </div>
 
       <div class="card reveal" style="--d:.08s">
-        <h3>Earnings and Education with LASSO</h3>
-        <p>Regression analysis using LASSO to find which factors best explain differences in earnings and education.</p>
-        <div class="tags"><span class="tag">Statistics</span><span class="tag">Regression</span></div>
-        <a class="more" href="https://github.com/usmanaslam402/Innovative-Data-Exploration-with-LASSO" target="_blank" rel="noopener">View on GitHub →</a>
+        <h3>Innovative Data Exploration with LASSO</h3>
+        <p>Team project using LASSO regression to find which variables best explain earnings and education outcomes. Published April 2024.</p>
+        <div class="tags"><span class="tag">Statistics</span><span class="tag">Regression</span><span class="tag">R</span></div>
+        <a class="more" href="https://usmanaslam402.github.io/Innovative-Data-Exploration-with-LASSO/" target="_blank" rel="noopener">Open project →</a>
       </div>
 
       <div class="card reveal" style="--d:.16s">
-        <h3>Faster R-CNN vs Mask R-CNN vs YOLOv8</h3>
-        <p>Comparative study of three object-detection architectures, with a transfer-learning case study on custom classes. Plain-language explainer available.</p>
-        <div class="tags"><span class="tag">Computer vision</span><span class="tag">Research</span></div>
-        <a class="more" href="https://lnkd.in/e4ueEK_m" target="_blank" rel="noopener">Read the explainer →</a>
+        <h3>Diabetes Prediction with Data Mining</h3>
+        <p>Compared Naive Bayes, ANN, decision tree, logistic regression and SVM on the Pima Indian Diabetes dataset to find the most dominant features and classify the disease early. Published March 2019.</p>
+        <div class="tags"><span class="tag">Machine learning</span><span class="tag">Classification</span></div>
+        <a class="more" href="https://www.academia.edu/145062341/Prediction_of_Diabetes_Disease_using_Data_Mining_Classification_Techniques" target="_blank" rel="noopener">Read the paper →</a>
       </div>
 
       <div class="card reveal" style="--d:.24s">
         <h3>GPT-3 Few-Shot Learning Replication</h3>
-        <p>Research replicating few-shot learning on question answering and machine translation across BLOOM, BERT, RoBERTa, T5, MarianMT and GPT-3.5 Turbo, with a 10-15% gain from prompt engineering.</p>
+        <p>Replicated few-shot learning on question answering and machine translation across BLOOM, BERT, RoBERTa, T5, MarianMT and GPT-3.5 Turbo, with a 10-15% gain from prompt engineering.</p>
         <div class="tags"><span class="tag">NLP</span><span class="tag">Research</span></div>
         <a class="more" href="https://lnkd.in/g_FnCTNB" target="_blank" rel="noopener">Read the paper →</a>
       </div>
@@ -195,13 +226,48 @@
     </div>
   </section>
 
+  <section id="research">
+    <h2 class="reveal">Research</h2>
+    <p class="research-note reveal">19 manuscripts in progress across data science, machine learning and business analytics, most currently under peer review. A selection:</p>
+    <div class="grid">
+
+      <div class="card reveal">
+        <h3>Faster R-CNN, Mask R-CNN and YOLOv8 for detection and segmentation</h3>
+        <p>Comparison of three architectures with a custom-class transfer-learning case study. Springer Nature, Discover Computer Vision.</p>
+        <div class="tags"><span class="tag status">Preprint</span></div>
+        <a class="more" href="https://gist.science/paper/rs/rs-10831765" target="_blank" rel="noopener">Plain-language explainer →</a>
+      </div>
+
+      <div class="card reveal" style="--d:.08s">
+        <h3>From Data to Decisions</h3>
+        <p>An integrated framework linking data infrastructure, analytics and generative AI for organizational decision-making. Journal of Business Research.</p>
+        <div class="tags"><span class="tag status">Under peer review</span></div>
+      </div>
+
+      <div class="card reveal" style="--d:.16s">
+        <h3>Sparse Regularization and the Returns to Schooling</h3>
+        <p>A LASSO regression re-examination of the NLSYM wage data. Empirical Economics.</p>
+        <div class="tags"><span class="tag status">Under peer review</span></div>
+      </div>
+
+      <div class="card reveal" style="--d:.24s">
+        <h3>Few-Shot Prompting vs Fine-Tuning</h3>
+        <p>A controlled comparison for question answering and machine translation. Applied Intelligence, Springer Nature.</p>
+        <div class="tags"><span class="tag status">Under peer review</span></div>
+      </div>
+
+    </div>
+    <p class="reveal" style="margin-top:14px"><a href="https://scholar.google.com/citations?user=CcJ0XBUAAAAJ&hl=en" target="_blank" rel="noopener">Full list on Google Scholar →</a></p>
+  </section>
+
   <section id="skills" class="skills">
     <h2 class="reveal">Skills</h2>
     <dl class="reveal">
       <dt>Data engineering</dt><dd>ETL/ELT, medallion architecture, Delta Lake, metadata-driven ingestion, orchestration, data quality (DQX)</dd>
       <dt>Cloud &amp; platforms</dt><dd>Azure Data Factory, Databricks, Azure Synapse, ADLS Gen2, AWS, Dynamics 365</dd>
-      <dt>Languages</dt><dd>SQL (T-SQL, PL/SQL), Python (Pandas, PySpark), C#, .NET</dd>
+      <dt>Languages</dt><dd>SQL (T-SQL, PL/SQL), Python (Pandas, PySpark), R, C#, .NET</dd>
       <dt>BI &amp; analytics</dt><dd>Power BI, Advanced Excel (Power Query, Pivot Tables), Jupyter, statistical modeling</dd>
+      <dt>Business tools</dt><dd>SAP, Microsoft Project, Microsoft Office, QA and testing, process documentation</dd>
       <dt>DevOps</dt><dd>CI/CD, GitLab, GitHub, Azure DevOps, Git, Agile/Scrum</dd>
     </dl>
   </section>
@@ -230,55 +296,254 @@
 <script>
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var reveals = document.querySelectorAll('.reveal');
 
-  // count-up numbers in the stat cards
+  /* ---------- count-up, reveal, nav ---------- */
   function countUp(el) {
+    if (el.dataset.done) return;
+    el.dataset.done = '1';
     var target = parseInt(el.getAttribute('data-count'), 10);
     if (reduce || isNaN(target)) { el.textContent = target; return; }
     var start = null, dur = 1300;
     function step(ts) {
       if (start === null) start = ts;
       var p = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
       if (p < 1) requestAnimationFrame(step);
     }
     el.textContent = 0;
     requestAnimationFrame(step);
   }
-
-  // scroll reveal
+  function show(el) {
+    el.classList.add('in');
+    el.querySelectorAll('[data-count]').forEach(countUp);
+  }
+  var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('in');
-        e.target.querySelectorAll('[data-count]').forEach(countUp);
-        io.unobserve(e.target);
-      });
+      entries.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
     reveals.forEach(function (el) { io.observe(el); });
-  } else {
-    reveals.forEach(function (el) { el.classList.add('in'); });
-  }
+  } else { reveals.forEach(show); }
+  // failsafe: never leave the top of the page hidden
+  setTimeout(function () {
+    document.querySelectorAll('.hero .reveal').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) show(el);
+    });
+  }, 1200);
 
-  // nav shadow, progress bar, active link
-  var nav = document.getElementById('nav');
-  var bar = document.getElementById('progress');
+  var nav = document.getElementById('nav'), bar = document.getElementById('progress');
   var links = document.querySelectorAll('nav a');
-  var sections = ['experience', 'projects', 'skills', 'contact'].map(function (id) { return document.getElementById(id); });
+  var secs = ['experience', 'projects', 'research', 'skills', 'contact'].map(function (id) { return document.getElementById(id); });
   function onScroll() {
     var y = window.scrollY || document.documentElement.scrollTop;
     var h = document.documentElement.scrollHeight - window.innerHeight;
     nav.classList.toggle('scrolled', y > 8);
     bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
-    var current = '';
-    sections.forEach(function (s) { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.4) current = s.id; });
-    links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+    var cur = '';
+    secs.forEach(function (s) { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.4) cur = s.id; });
+    links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  /* ---------- interactive data-brick pipeline ---------- */
+  var cv = document.getElementById('pipe');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var W = 0, H = 0, dpr = 1;
+  var gate1 = 0, gate2 = 0, wallLeft = 0, laneY = [], trayL = 0, trayR = 0;
+  var LANES = 5, BW = 26, BH = 12;
+  var C = {};                       // theme colors
+  var bricks = [], t = 0, spawnAt = 0, laneCtr = 0;
+  var ingested = 0, quarantined = 0, delivered = 0, wallN = 0, trayN = 0;
+  var ptr = { x: -999, y: -999 };
+  var elIn = document.getElementById('c-in'), elQ = document.getElementById('c-q'), elG = document.getElementById('c-g');
+
+  function hex(c) {
+    c = c.trim();
+    if (c.charAt(0) === '#') {
+      if (c.length === 4) c = '#' + c[1] + c[1] + c[2] + c[2] + c[3] + c[3];
+      return [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)];
+    }
+    var m = c.match(/\d+/g) || [128, 128, 128]; return [+m[0], +m[1], +m[2]];
+  }
+  function readTheme() {
+    var s = getComputedStyle(document.documentElement);
+    ['bronze', 'silver', 'gold', 'bad', 'muted', 'line', 'surface', 'text'].forEach(function (k) { C[k] = hex(s.getPropertyValue('--' + k)); });
+  }
+  function rgba(a, al) { return 'rgba(' + (a[0] | 0) + ',' + (a[1] | 0) + ',' + (a[2] | 0) + ',' + al + ')'; }
+  function mix(a, b, k) { return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k]; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function smooth(a, b, v) { var k = clamp((v - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); }
+
+  function layout() {
+    var r = cv.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    gate1 = W * 0.34; gate2 = W * 0.64; wallLeft = W * 0.80;
+    var top = 62, bottom = H - 70;
+    laneY = [];
+    for (var i = 0; i < LANES; i++) laneY.push(top + (bottom - top) * i / (LANES - 1));
+    trayL = gate1 - 92; trayR = gate1 + 92;
+  }
+
+  function spawn(x, y) {
+    bricks.push({
+      x: x, y: y, vx: 0.6 + Math.random() * 0.12, vy: 0, ang: (Math.random() - 0.5) * 1.6,
+      lane: (laneCtr++) % LANES, stage: 0, bad: Math.random() < 0.16, st: 'flow',
+      passed1: false, passed2: false, a: 1, ph: Math.random() * 6.28, tx: 0, ty: 0
+    });
+    ingested++;
+  }
+
+  function step(dt) {   // dt in ~frames (1 = 16.7ms)
+    t += dt;
+    spawnAt -= dt;
+    if (spawnAt <= 0 && bricks.length < 110) { spawn(-24, laneY[0] - 18 + Math.random() * (laneY[LANES - 1] - laneY[0] + 36)); spawnAt = 20 + Math.random() * 14; }
+
+    for (var i = bricks.length - 1; i >= 0; i--) {
+      var b = bricks[i];
+
+      if (b.st === 'dead') { b.a -= 0.035 * dt; if (b.a <= 0) bricks.splice(i, 1); continue; }
+
+      // pointer repel (flow + falling)
+      if (b.st === 'flow' || b.st === 'fall') {
+        var dx = b.x - ptr.x, dy = b.y - ptr.y, d2 = dx * dx + dy * dy, R = 84;
+        if (d2 < R * R && d2 > 0.01) {
+          var d = Math.sqrt(d2), f = Math.pow(1 - d / R, 2) * 7 * dt;
+          b.x += dx / d * f; b.y += dy / d * f; b.ang += (dx > 0 ? 1 : -1) * f * 0.03;
+        }
+      }
+
+      if (b.st === 'flow') {
+        b.x += b.vx * dt;
+        var order = smooth(gate1 - 46, gate1 + 46, b.x);
+        if (order < 0.5) { b.y += Math.sin(t * 0.05 + b.ph) * 0.35 * dt; b.ang += Math.sin(t * 0.04 + b.ph) * 0.012 * dt; }
+        else { b.y += (laneY[b.lane] - b.y) * 0.09 * dt; b.ang += (0 - b.ang) * 0.12 * dt; }
+        if (!b.passed1 && b.x > gate1) {
+          b.passed1 = true;
+          if (b.bad) { b.st = 'fall'; b.vy = -1.2; quarantined++; var s = trayN++; b.tx = trayL + 14 + (s % 6) * (BW + 4); b.ty = H - 24 - Math.floor(s / 6) * (BH + 3); if (trayN >= 12) { trayN = 0; clearWhere('tray'); } continue; }
+          b.stage = 1;
+        }
+        if (!b.passed2 && b.x > gate2) { b.passed2 = true; b.stage = 2; }
+        if (b.x > wallLeft - 6 && b.stage === 2) {
+          var cap = 30, cols = 5, idx = wallN % cap, col = idx % cols, row = Math.floor(idx / cols);
+          b.tx = wallLeft + 8 + col * (BW + 4); b.ty = H - 24 - row * (BH + 3);
+          b.st = 'wall'; delivered++; wallN++;
+          if (wallN >= cap) { wallN = 0; setTimeout(function () { clearWhere('wall'); }, 500); }
+        }
+        if (b.x > W + 40) b.st = 'dead';
+      } else if (b.st === 'fall') {
+        b.vy += 0.32 * dt; b.y += b.vy * dt; b.x += (b.tx - b.x) * 0.08 * dt; b.ang += 0.05 * dt;
+        if (b.y >= b.ty) { b.y = b.ty; b.st = 'tray'; b.ang = 0; }
+      } else if (b.st === 'wall') {
+        b.x += (b.tx - b.x) * 0.16 * dt; b.y += (b.ty - b.y) * 0.16 * dt; b.ang += (0 - b.ang) * 0.2 * dt;
+      } else if (b.st === 'tray') { /* resting */ }
+    }
+  }
+  function clearWhere(state) { bricks.forEach(function (b) { if (b.st === state) b.st = 'dead'; }); }
+
+  function brickColor(b) {
+    if (b.bad && b.stage === 0) return mix(C.bronze, C.bad, 0.55 + 0.25 * Math.sin(t * 0.2 + b.ph));
+    if (b.st === 'tray' || b.st === 'fall') return C.bad;
+    if (b.st === 'wall') return C.gold;
+    var k = smooth(gate1 - 34, gate1 + 34, b.x), k2 = smooth(gate2 - 34, gate2 + 34, b.x);
+    return mix(mix(C.bronze, C.silver, k), C.gold, k2);
+  }
+  function rr(x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
+  }
+  function label(txt, x, y, col, al, align) {
+    ctx.font = '600 10.5px system-ui, -apple-system, "Segoe UI", Arial, sans-serif';
+    ctx.textAlign = align || 'left'; ctx.fillStyle = rgba(col, al);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '1.2px';
+    ctx.fillText(txt, x, y);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // zone tints
+    ctx.fillStyle = rgba(C.bronze, 0.055); ctx.fillRect(0, 0, gate1, H);
+    ctx.fillStyle = rgba(C.silver, 0.07);  ctx.fillRect(gate1, 0, gate2 - gate1, H);
+    ctx.fillStyle = rgba(C.gold, 0.07);    ctx.fillRect(gate2, 0, W - gate2, H);
+    // lanes (only where data is ordered)
+    ctx.strokeStyle = rgba(C.muted, 0.14); ctx.lineWidth = 1;
+    laneY.forEach(function (y) { ctx.beginPath(); ctx.moveTo(gate1, y); ctx.lineTo(W, y); ctx.stroke(); });
+    // gates
+    ctx.setLineDash([4, 5]); ctx.strokeStyle = rgba(C.muted, 0.45);
+    [gate1, gate2].forEach(function (g) { ctx.beginPath(); ctx.moveTo(g, 34); ctx.lineTo(g, H - 8); ctx.stroke(); });
+    ctx.setLineDash([]);
+    // labels
+    label('BRONZE · RAW', 14, 22, C.bronze, 0.95);
+    label('SILVER · VALIDATED', gate1 + 12, 22, C.silver, 0.95);
+    label('GOLD · CURATED', gate2 + 12, 22, C.gold, 0.95);
+    label('QUALITY CHECK', gate1, 46, C.muted, 0.8, 'center');
+    label('CURATE', gate2, 46, C.muted, 0.8, 'center');
+    // quarantine tray
+    ctx.setLineDash([3, 4]); ctx.strokeStyle = rgba(C.bad, 0.6); rr(trayL, H - 50, trayR - trayL, 42, 6); ctx.stroke(); ctx.setLineDash([]);
+    label('QUARANTINE', trayL + 8, H - 56, C.bad, 0.85);
+    // wall base
+    ctx.strokeStyle = rgba(C.gold, 0.5); ctx.beginPath(); ctx.moveTo(wallLeft, H - 10); ctx.lineTo(W - 8, H - 10); ctx.stroke();
+    label('GOLD TABLES', wallLeft + 8, H - 18 - 6 * (BH + 3) - 6, C.gold, 0.8);
+
+    // bricks
+    for (var i = 0; i < bricks.length; i++) {
+      var b = bricks[i], col = brickColor(b);
+      ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.ang); ctx.globalAlpha = clamp(b.a, 0, 1);
+      ctx.fillStyle = rgba(col, 0.92); rr(-BW / 2, -BH / 2, BW, BH, 3); ctx.fill();
+      ctx.strokeStyle = rgba(mix(col, [0, 0, 0], 0.28), 0.9); ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.fillRect(-BW / 2 + 3, -BH / 2 + 2, BW - 6, 2);          // top highlight
+      ctx.strokeStyle = 'rgba(0,0,0,0.12)'; ctx.beginPath(); ctx.moveTo(0, -BH / 2 + 1); ctx.lineTo(0, BH / 2 - 1); ctx.stroke(); // mortar line
+      ctx.restore();
+    }
+    // pointer ring
+    if (ptr.x > -100) { ctx.strokeStyle = rgba(C.muted, 0.35); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(ptr.x, ptr.y, 84, 0, 6.2832); ctx.stroke(); }
+  }
+
+  function chips() {
+    elIn.textContent = ingested.toLocaleString(); elQ.textContent = quarantined.toLocaleString(); elG.textContent = delivered.toLocaleString();
+  }
+
+  /* pointer */
+  function pos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+  cv.addEventListener('pointermove', function (e) { var p = pos(e); ptr.x = p.x; ptr.y = p.y; });
+  cv.addEventListener('pointerleave', function () { ptr.x = ptr.y = -999; });
+  cv.addEventListener('pointerdown', function (e) {
+    var p = pos(e);
+    for (var i = 0; i < 7; i++) spawn(-10 - Math.random() * 70, clamp(p.y + (Math.random() - 0.5) * 70, 56, H - 60));
+    if (e.pointerType === 'touch') { ptr.x = p.x; ptr.y = p.y; setTimeout(function () { ptr.x = ptr.y = -999; }, 400); }
+  });
+
+  /* run loop */
+  readTheme();
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener && window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { readTheme(); if (reduce) draw(); });
+  layout();
+  for (var w = 0; w < 520; w++) step(1);     // warm-up so the pipeline starts populated
+  ingested = quarantined = delivered = 0;
+  bricks.forEach(function (b) { ingested++; if (b.st === 'tray') quarantined++; if (b.st === 'wall') delivered++; });
+  chips(); draw();
+
+  var running = false, last = 0, chipT = 0, visible = true;
+  function frame(now) {
+    if (!running) return;
+    var dt = clamp((now - last) / 16.67, 0, 3); last = now;
+    step(dt); draw();
+    chipT += dt; if (chipT > 8) { chips(); chipT = 0; }
+    requestAnimationFrame(frame);
+  }
+  function start() { if (reduce || running || !visible || document.hidden) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
+  function stop() { running = false; }
+  window.addEventListener('resize', function () { layout(); draw(); });
+  document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }, { threshold: 0.05 }).observe(cv);
+  } else { start(); }
 })();
 </script>
 
