@@ -125,7 +125,7 @@
     * { transition-duration: .01ms !important; }
   }
 </style>
-<script>document.documentElement.classList.add('js');</script>
+<link rel="stylesheet" href="analytics.css"><script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -135,7 +135,7 @@
   <div class="wrap">
     <a class="brand" href="#top">Usman Aslam</a>
     <nav>
-      <a href="#experience">Experience</a>
+      <a href="#analytics">Analytics</a><a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#research">Research</a>
       <a href="#skills">Skills</a>
@@ -182,7 +182,7 @@
     </div>
   </div>
 
-  <section id="experience">
+  <section id="analytics"><h2 class="reveal">Analytics in action</h2><p class="research-note reveal">Interactive demos of how I work. The impact figures come from my projects. The trend, quality-gate and SQL examples use illustrative sample data.</p><div class="dash"><div class="tile reveal" id="t-impact"><div class="tile-h"><h3>Impact, before and after</h3><div class="seg" role="group" aria-label="Compare"><button type="button" class="on" data-s="b" aria-pressed="true">Before</button><button type="button" data-s="a" aria-pressed="false">After</button></div></div><div class="bars"></div><p class="cap">Index = 100 before my changes (lower is better). On-time data landing is a percentage.</p></div><div class="tile reveal" id="t-dq" style="--d:.08s"><div class="tile-h"><h3>Data-quality gate</h3></div><div class="dq"><div class="donut-wrap"></div><div><label for="dq-thr" class="cap" style="display:block;margin:0 0 6px">Quality threshold: <b id="dq-v">80</b>%</label><input type="range" id="dq-thr" min="50" max="95" value="80" step="1"><ul class="legend"><li><i class="sw pass"></i><b id="dq-p">0</b> passed</li><li><i class="sw fail"></i><b id="dq-f">0</b> quarantined</li></ul></div></div><p class="cap">Drag the slider: records scoring below the threshold are quarantined, as in a data-quality rule set (1,000 sample records).</p></div><div class="tile wide reveal" id="t-trend"><div class="tile-h"><h3>Daily records processed (sample)</h3><div class="seg" role="group" aria-label="Series"><button type="button" class="on" data-s="d" aria-pressed="true">Daily</button><button type="button" data-s="a" aria-pressed="false">7-day average</button></div></div><div class="chartwrap"></div><p class="cap">Hover or touch the chart to read values.</p></div><div class="tile wide reveal" id="t-sql"><div class="term"><div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">analytics.sql</span><button type="button" class="run">Run &#9654;</button></div><pre class="code" aria-label="SQL query"></pre><div class="out"></div></div></div></div></section><section id="experience">
     <h2 class="reveal">Experience</h2>
 
     <div class="job reveal">
@@ -319,7 +319,7 @@
 
 <footer>
   <div class="wrap">© 2026 Usman Aslam · Philadelphia, PA</div>
-</footer>
+</footer><script src="analytics.js" defer></script>
 
 <script>
 (function () {
@@ -362,7 +362,7 @@
 
   var nav = document.getElementById('nav'), bar = document.getElementById('progress');
   var links = document.querySelectorAll('nav a');
-  var secs = ['experience', 'projects', 'research', 'skills', 'contact'].map(function (id) { return document.getElementById(id); });
+  var secs = ['analytics', 'experience', 'projects', 'research', 'skills', 'contact'].map(function (id) { return document.getElementById(id); });
   function onScroll() {
     var y = window.scrollY || document.documentElement.scrollTop;
     var h = document.documentElement.scrollHeight - window.innerHeight;
